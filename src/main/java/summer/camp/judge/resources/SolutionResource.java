@@ -26,7 +26,7 @@ import summer.camp.judge.validation.SolutionValidator;
  * Service for educations
  */
 @Singleton
-@Path("/protected/admin/tasks")
+@Path("/protected/admin/solution")
 public class SolutionResource extends AbstractCRUDService<Long, Solution> {
 
 	private static final String ERROR_THERE_IS_NO_TASK_WITH_TASK_ID_MESSAGE = "There is no task with [taskId={0}]";

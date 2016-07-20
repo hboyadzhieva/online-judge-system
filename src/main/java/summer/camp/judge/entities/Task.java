@@ -43,10 +43,10 @@ public class Task implements IJPAEntity<Long>, Serializable {
 	@Column
 	private Long timelimit;
 
-	@OneToMany(mappedBy = "task", fetch = FetchType.EAGER, orphanRemoval = true)
+	@OneToMany(mappedBy = "task", fetch = FetchType.LAZY, orphanRemoval = true)
 	private List<TestCase> testCases = new ArrayList<>();
 
-	@OneToMany(mappedBy = "task", fetch = FetchType.EAGER, orphanRemoval = true)
+	@OneToMany(mappedBy = "task", fetch = FetchType.LAZY, orphanRemoval = true)
 	private List<Solution> solutions = new ArrayList<>();
 
 	/**
