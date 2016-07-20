@@ -29,10 +29,10 @@ public class TestCase implements IJPAEntity<Long>, Serializable {
 	private Long testCaseId;
 
 	@Column(length = 64, nullable = false)
-	private String input;
+	private String inputData;
 
 	@Column(length = 64, nullable = false)
-	private String output;
+	private String result;
 
 	@ManyToOne
 	private Task task;
@@ -44,27 +44,27 @@ public class TestCase implements IJPAEntity<Long>, Serializable {
 		super();
 	}
 
-	public TestCase(String input, String output, Task task) {
+	public TestCase(String inputData, String result, Task task) {
 		super();
-		this.input = input;
-		this.output = output;
+		this.inputData = inputData;
+		this.result = result;
 		this.task = task;
 	}
 
 	public String getInput() {
-		return input;
+		return inputData;
 	}
 
-	public void setInput(String input) {
-		this.input = input;
+	public void setInput(String inputData) {
+		this.inputData = inputData;
 	}
 
 	public String getOutput() {
-		return output;
+		return result;
 	}
 
-	public void setOutput(String output) {
-		this.output = output;
+	public void setOutput(String result) {
+		this.result = result;
 	}
 
 	public Task getTask() {
