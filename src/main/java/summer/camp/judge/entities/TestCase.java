@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.google.gson.Gson;
@@ -19,14 +18,11 @@ import com.google.gson.Gson;
 @Table(name = "T_TEST_CASE")
 public class TestCase implements IJPAEntity<Long>, Serializable {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = -3870580534573288562L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long testCaseId;
+	private long id;
 
 	@Column(length = 64, nullable = false)
 	private String inputData;
@@ -34,21 +30,18 @@ public class TestCase implements IJPAEntity<Long>, Serializable {
 	@Column(length = 64, nullable = false)
 	private String result;
 
-	@ManyToOne
-	private Task task;
+	@Column(name = "TASKID")
+	private Long taskId;
 
 	/**
 	 * Needed for serialization . desrialization
 	 */
 	public TestCase() {
-		super();
 	}
 
-	public TestCase(String inputData, String result, Task task) {
-		super();
+	public TestCase(String inputData, String result) {
 		this.inputData = inputData;
 		this.result = result;
-		this.task = task;
 	}
 
 	public String getInput() {
@@ -67,18 +60,10 @@ public class TestCase implements IJPAEntity<Long>, Serializable {
 		this.result = result;
 	}
 
-	public Task getTask() {
-		return task;
-	}
-
-	public void setTask(Task task) {
-		this.task = task;
-	}
-
 	/** {@inheritDoc} */
 	@Override
 	public Long getKeyValue() {
-		return testCaseId;
+		return id;
 	}
 
 	/** {@inheritDoc} */
@@ -94,6 +79,14 @@ public class TestCase implements IJPAEntity<Long>, Serializable {
 	 */
 	public String toJson() {
 		return new Gson().toJson(this);
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setTaskId(long id) {
+		this.id = id;
 	}
 
 }
