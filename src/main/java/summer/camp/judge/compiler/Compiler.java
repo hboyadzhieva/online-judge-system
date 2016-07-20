@@ -1,116 +1,123 @@
 package summer.camp.judge.compiler;
+
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Locale;
 
-import javax.tools.Diagnostic;
-import javax.tools.DiagnosticListener;
 import javax.tools.JavaCompiler;
 import javax.tools.JavaFileObject;
-import javax.tools.SimpleJavaFileObject;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
 
+import org.apache.commons.io.FileUtils;
+
+@SuppressWarnings("javadoc")
 public class Compiler {
 
-	private static String classOutputFolder = "./bin";
+	private static final String CLASSES_OUTPUT_FOLDER = "./compiledTasks/";
 
-	public static class MyDiagnosticListener implements DiagnosticListener<JavaFileObject> {
-		public void report(Diagnostic<? extends JavaFileObject> diagnostic) {
-			System.err.println("Line Number -> " + diagnostic.getLineNumber());
-			System.err.println("code -> " + diagnostic.getCode());
-			System.err.println("Message -> " + diagnostic.getMessage(Locale.ENGLISH));
-			System.err.println("Source -> " + diagnostic.getSource());
-			System.err.println(" ");
+	private String currentUserClassesOutputFolder;
+
+	private File currentUserOutputFolder;
+
+	public Compiler(String userId) {
+		this.currentUserClassesOutputFolder = CLASSES_OUTPUT_FOLDER + userId + "/";
+		this.currentUserOutputFolder = new File(currentUserClassesOutputFolder);
+		if (!currentUserOutputFolder.exists()) {
+			currentUserOutputFolder.mkdirs();
 		}
 	}
 
-	public static class InMemoryJavaFileObject extends SimpleJavaFileObject {
-		private String contents = null;
-
-		public InMemoryJavaFileObject(String className, String contents) throws Exception {
-			super(URI.create("string:///" + className.replace('.', '/') + Kind.SOURCE.extension), Kind.SOURCE);
-			this.contents = contents;
-		}
-
-		public CharSequence getCharContent(boolean ignoreEncodingErrors) throws IOException {
-			return contents;
-		}
-	}
-
-	public static void compile(JavaFileObject file) {
+	public void compile(JavaFileObject code) {
 		// get system compiler:
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 		// for compilation diagnostic message processing on compilation
 		// WARNING/ERROR
-		MyDiagnosticListener diagnosticListener = new MyDiagnosticListener();
+		JavaCompilerDiagnosticListener diagnosticListener = new JavaCompilerDiagnosticListener();
 		StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnosticListener, Locale.ENGLISH, null);
 		// specify classes output folder
-		Iterable options = Arrays.asList("-d", classOutputFolder);
-		JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager, diagnosticListener, options, null, Arrays.asList(file));
+		Iterable<String> options = Arrays.asList("-d", currentUserClassesOutputFolder, "-s", currentUserClassesOutputFolder);
+		JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager, diagnosticListener, options, null, Arrays.asList(code));
 		task.call();
 	}
 
-	public static void runIt(String className) {
+	public String runIt(String className, String[] arguments) {
 		// Create a File object on the root of the directory
 		// containing the class file
-		File file = new File(classOutputFolder);
+
+		URLClassLoader loader = null;
 
 		try {
 			// Convert File to a URL
-			URL url = file.toURL(); // file:/classes/demo
+			URL url = currentUserOutputFolder.toURL(); // file:/classes/demo
 			URL[] urls = new URL[] { url };
 
 			// Create a new class loader with the directory
-			ClassLoader loader = new URLClassLoader(urls);
+			loader = new URLClassLoader(urls);
 
 			Class thisClass = loader.loadClass(className);
 
-			Class params[] = {};
-			Object paramsObj[] = {};
+			Class params[] = { String[].class };
+			Object paramsObj[] = { arguments };
 			Object instance = thisClass.newInstance();
-			Method thisMethod = thisClass.getDeclaredMethod("testAdd", params);
+			Method mainMethod = thisClass.getDeclaredMethod("main", params);
 
 			// run the testAdd() method on the instance:
-			thisMethod.invoke(instance, paramsObj);
+			PrintStream test = new PrintStream("./test");
+			System.setOut(test);
+			mainMethod.invoke(instance, paramsObj);
+			test.flush();
+			test.close();
+
+			return null;
+			// return result();
 		} catch (MalformedURLException e) {
+
 		} catch (ClassNotFoundException e) {
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
-
+			try {
+				loader.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
+
+		return null;
 	}
 
-	private static JavaFileObject getJavaFileObject() {
-		StringBuilder contents = new StringBuilder(
-				"package math;" + "public class Calculator { " + "  public void testAdd() { "
-						+ "    System.out.println(200+300) " + "  } " + "  public static void main(String[] args) { "
-						+ "    Calculator cal = new Calculator(); " + "    cal.testAdd(); " + "  } " + "} ");
-		JavaFileObject so = null;
+	private String result() {
+		Charset charset = Charset.forName("UTF-8");
+		try (BufferedReader reader = Files.newBufferedReader(Paths.get(currentUserClassesOutputFolder + "/out.txt"), charset)) {
+			StringBuilder builder = new StringBuilder();
+			String line = null;
+			while ((line = reader.readLine()) != null) {
+				builder.append(line);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public void cleanClassOutputFolder() {
 		try {
-			so = new InMemoryJavaFileObject("math.Calculator", contents.toString());
-		} catch (Exception exception) {
-			exception.printStackTrace();
+			FileUtils.deleteDirectory(currentUserOutputFolder);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		return so;
-	}
-
-	public static void main(String[] args) throws Exception {
-		// 1.Construct an in-memory java source file from your dynamic code
-		JavaFileObject file = getJavaFileObject();
-
-		// 2.Compile your files by JavaCompiler
-		compile(file);
-
-		// 3.Load your class by URLClassLoader, then instantiate the instance,
-		// and call method by reflection
-		runIt("math.Calculator");
 	}
 }
