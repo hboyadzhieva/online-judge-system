@@ -9,9 +9,9 @@
 		<class>summer.camp.judge.entities.User</class>
 		<class>summer.camp.judge.entities.Solution</class>
 		<class>summer.camp.judge.entities.TestCase</class>
-<!-- 		<shared-cache-mode>NONE</shared-cache-mode> -->
+		<shared-cache-mode>NONE</shared-cache-mode>
 		<properties>
-			 <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+			<property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
             <property name="eclipselink.logging.level" value="FINE"/>
 		</properties>
 	</persistence-unit>
