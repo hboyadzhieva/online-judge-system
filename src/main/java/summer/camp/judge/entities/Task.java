@@ -1,12 +1,16 @@
 package summer.camp.judge.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.google.gson.Gson;
@@ -39,11 +43,26 @@ public class Task implements IJPAEntity<Long>, Serializable {
 	@Column
 	private Long timelimit;
 
+	@OneToMany(mappedBy = "task", fetch = FetchType.EAGER, orphanRemoval = true)
+	private List<TestCase> testCases = new ArrayList<>();
+
+	@OneToMany(mappedBy = "task", fetch = FetchType.EAGER, orphanRemoval = true)
+	private List<Solution> solutions = new ArrayList<>();
+
 	/**
 	 * Needed for serialization . desrialization
 	 */
 	public Task() {
 		// empty block
+	}
+
+	public Task(String name, String statement, String sampleInput, String sampleOutput, Long timelimit) {
+		super();
+		this.name = name;
+		this.statement = statement;
+		this.sampleInput = sampleInput;
+		this.sampleOutput = sampleOutput;
+		this.timelimit = timelimit;
 	}
 
 	public Long getTaskId() {
@@ -92,6 +111,22 @@ public class Task implements IJPAEntity<Long>, Serializable {
 
 	public void setTimelimit(Long timelimit) {
 		this.timelimit = timelimit;
+	}
+
+	public List<TestCase> getTestCases() {
+		return testCases;
+	}
+
+	public void setTestCases(List<TestCase> testCases) {
+		this.testCases = testCases;
+	}
+
+	public List<Solution> getSolutions() {
+		return solutions;
+	}
+
+	public void setSolutions(List<Solution> solutions) {
+		this.solutions = solutions;
 	}
 
 	/** {@inheritDoc} */
