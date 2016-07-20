@@ -1,0 +1,4 @@
+<!DOCTYPE xml>
+<mvc:View xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" displayBlock="true">
+	<SplitApp id="splitApp" />
+</mvc:View>

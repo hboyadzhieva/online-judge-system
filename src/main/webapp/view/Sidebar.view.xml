@@ -1,0 +1,33 @@
+<!DOCTYPE xml>
+<mvc:View
+	controllerName="summer.camp.judge.controller.Sidebar"
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:h="http://www.w3.org/1999/xhtml">
+	<Page
+		id="page"
+		title="Online Judge system" >
+		<headerContent>
+		</headerContent>
+		<footer>
+			<Toolbar>
+			</Toolbar>
+		</footer>
+		<content>
+			<List
+				id="deviceList"
+				mode="None">
+				<items>
+					<StandardListItem title="Tasks" type="Active" press="onTasksPress">
+						<customData>
+							<core:CustomData
+								key="tasks"
+								value="Tasks"/>
+						</customData>
+					</StandardListItem>
+				</items>
+			</List>
+		</content>
+	</Page>
+</mvc:View>
