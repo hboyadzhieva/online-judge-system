@@ -23,7 +23,7 @@ public class Solution implements IJPAEntity<Long>, Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long solutionId;
+	private long id;
 
 	@Column(length = 256, nullable = false)
 	private String text;
@@ -38,20 +38,25 @@ public class Solution implements IJPAEntity<Long>, Serializable {
 	private User user;
 
 	public Solution() {
-		super();
 	}
 
-	public Solution(Long solutionId, String text, String language, Task task, User user) {
+	public Solution(long id, String text, String language) {
 		super();
-		this.solutionId = solutionId;
+		this.id = id;
 		this.text = text;
 		this.language = language;
-		this.task = task;
-		this.user = user;
 	}
 
 	public String getText() {
 		return text;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public void setText(String text) {
@@ -85,7 +90,7 @@ public class Solution implements IJPAEntity<Long>, Serializable {
 	/** {@inheritDoc} */
 	@Override
 	public Long getKeyValue() {
-		return solutionId;
+		return id;
 	}
 
 	/** {@inheritDoc} */

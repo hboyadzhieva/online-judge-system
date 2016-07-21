@@ -1,15 +1,14 @@
 package summer.camp.judge.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -26,7 +25,7 @@ public class Task implements IJPAEntity<Long>, Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long taskId;
+	private long id;
 
 	@Column(length = 64, nullable = false)
 	private String name;
@@ -43,11 +42,9 @@ public class Task implements IJPAEntity<Long>, Serializable {
 	@Column
 	private Long timelimit;
 
-	@OneToMany(mappedBy = "task", fetch = FetchType.LAZY, orphanRemoval = true)
-	private List<TestCase> testCases = new ArrayList<>();
-
-	@OneToMany(mappedBy = "task", fetch = FetchType.LAZY, orphanRemoval = true)
-	private List<Solution> solutions = new ArrayList<>();
+	@OneToMany
+	@JoinColumn(name = "TASKID", referencedColumnName = "ID")
+	private List<TestCase> testCases;
 
 	/**
 	 * Needed for serialization . desrialization
@@ -57,7 +54,6 @@ public class Task implements IJPAEntity<Long>, Serializable {
 	}
 
 	public Task(String name, String statement, String sampleInput, String sampleOutput, Long timelimit) {
-		super();
 		this.name = name;
 		this.statement = statement;
 		this.sampleInput = sampleInput;
@@ -65,12 +61,12 @@ public class Task implements IJPAEntity<Long>, Serializable {
 		this.timelimit = timelimit;
 	}
 
-	public Long getTaskId() {
-		return taskId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setTaskId(Long taskId) {
-		this.taskId = taskId;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -121,18 +117,10 @@ public class Task implements IJPAEntity<Long>, Serializable {
 		this.testCases = testCases;
 	}
 
-	public List<Solution> getSolutions() {
-		return solutions;
-	}
-
-	public void setSolutions(List<Solution> solutions) {
-		this.solutions = solutions;
-	}
-
 	/** {@inheritDoc} */
 	@Override
 	public Long getKeyValue() {
-		return taskId;
+		return id;
 	}
 
 	/** {@inheritDoc} */

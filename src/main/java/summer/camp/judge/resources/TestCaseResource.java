@@ -14,19 +14,19 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
-
 import summer.camp.judge.commons.UnitOfWorkUtils;
 import summer.camp.judge.dao.TestCaseDao;
 import summer.camp.judge.entities.TestCase;
 import summer.camp.judge.validation.TestCaseValidator;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+
 /**
  * Service for educations
  */
 @Singleton
-@Path("/protected/admin/testcase")
+@Path("/testcases")
 public class TestCaseResource extends AbstractCRUDService<Long, TestCase> {
 
 	private static final String ERROR_THERE_IS_NO_TASK_WITH_TASK_ID_MESSAGE = "There is no task with [taskId={0}]";

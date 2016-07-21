@@ -1,0 +1,15 @@
+[
+	{
+		name: quicksort,
+		statement: yslovie,
+		sampleInput: 123,
+		sampleOutpit: 356,
+		timeLimit: 1244,
+		testCases: [{
+			id: 1
+		},
+		{ 
+			id: 2
+		}]
+	}
+]

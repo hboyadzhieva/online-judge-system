@@ -1,0 +1,10 @@
+[
+	{
+		inputData: "testinput",
+		result: "testResult"
+	},
+	{
+		inputData: "testinput2",
+		result: "testResult2"
+	}
+]

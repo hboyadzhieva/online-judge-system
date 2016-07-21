@@ -14,28 +14,28 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
-
 import summer.camp.judge.commons.UnitOfWorkUtils;
 import summer.camp.judge.dao.SolutionDao;
 import summer.camp.judge.entities.Solution;
 import summer.camp.judge.validation.SolutionValidator;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+
 /**
  * Service for educations
  */
 @Singleton
-@Path("/protected/admin/solution")
+@Path("/solutions")
 public class SolutionResource extends AbstractCRUDService<Long, Solution> {
 
-	private static final String ERROR_THERE_IS_NO_TASK_WITH_TASK_ID_MESSAGE = "There is no task with [taskId={0}]";
+	private static final String ERROR_THERE_IS_NO_TASK_WITH_TASK_ID_MESSAGE = "There is no task with [id={0}]";
 
 	/**
 	 * Constructor
 	 *
-	 * @param taskDao
-	 * @param taskValidator
+	 * @param solutionDao
+	 * @param solutionValidator
 	 * @param unitOfWorkUtils
 	 */
 	@Inject
@@ -44,9 +44,9 @@ public class SolutionResource extends AbstractCRUDService<Long, Solution> {
 	}
 
 	/**
-	 * Returns a list of all tasks
+	 * Returns a list of all solutions
 	 *
-	 * @return a list of all tasks
+	 * @return a list of all solutions
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -55,10 +55,10 @@ public class SolutionResource extends AbstractCRUDService<Long, Solution> {
 	}
 
 	/**
-	 * Returns a task specified by the id path parameter
+	 * Returns a solution specified by the id path parameter
 	 *
 	 * @param id
-	 * @return a task specified by the id path parameter
+	 * @return a solution specified by the id path parameter
 	 */
 	@GET
 	@Path("/{id}")
@@ -68,10 +68,10 @@ public class SolutionResource extends AbstractCRUDService<Long, Solution> {
 	}
 
 	/**
-	 * Adds new task
+	 * Adds new solution
 	 *
-	 * @param task
-	 * @return HTTP 201 CREATED if the task was successfully added or
+	 * @param solution
+	 * @return HTTP 201 CREATED if the solution was successfully added or
 	 *         HTTP 400 BAD REQUEST if something went wrong
 	 */
 	@POST
@@ -81,10 +81,10 @@ public class SolutionResource extends AbstractCRUDService<Long, Solution> {
 	}
 
 	/**
-	 * Updates existing task
+	 * Updates existing solution
 	 *
 	 * @param id
-	 * @param task
+	 * @param solution
 	 * @return HTTP 204 NO CONTENT if the update was successful or
 	 *         HTTP 404 NOT FOUND if there was no such task
 	 */
@@ -96,7 +96,7 @@ public class SolutionResource extends AbstractCRUDService<Long, Solution> {
 	}
 
 	/**
-	 * Deletes existing task
+	 * Deletes existing solution
 	 *
 	 * @param id
 	 * @return HTTP 204 NO CONTENT if the deletion was successful or
@@ -109,9 +109,9 @@ public class SolutionResource extends AbstractCRUDService<Long, Solution> {
 	}
 
 	/**
-	 * Returns the count of all tasks
+	 * Returns the count of all solutions
 	 *
-	 * @return the count of all tasks
+	 * @return the count of all solutions
 	 */
 	@GET
 	@Path("/count")

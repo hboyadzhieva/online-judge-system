@@ -6,6 +6,9 @@
 	<listener>
 		<listener-class>summer.camp.judge.inject.ApplicationContextListener</listener-class>
 	</listener>
+	<listener>
+		<listener-class>summer.camp.judge.initialization.ConfigurationInitListener</listener-class>
+	</listener>
 	<servlet>
 		<servlet-name>CXFServlet</servlet-name>
 		<servlet-class>org.apache.cxf.jaxrs.servlet.CXFNonSpringJaxrsServlet</servlet-class>

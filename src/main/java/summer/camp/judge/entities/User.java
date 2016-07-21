@@ -1,16 +1,12 @@
 package summer.camp.judge.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.google.gson.Gson;
@@ -22,14 +18,11 @@ import com.google.gson.Gson;
 @Table(name = "T_USER")
 public class User implements IJPAEntity<Long>, Serializable {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 6014718856140269190L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long userId;
+	private long id;
 
 	@Column(length = 64, nullable = false)
 	private String firstName;
@@ -43,9 +36,6 @@ public class User implements IJPAEntity<Long>, Serializable {
 	@Column(length = 256)
 	private String phoneNumber;
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, orphanRemoval = true)
-	private List<Solution> userSolutions = new ArrayList<>();
-
 	public String getFirstName() {
 		return firstName;
 	}
@@ -54,15 +44,21 @@ public class User implements IJPAEntity<Long>, Serializable {
 	 * Needed for serialization . deserialization
 	 */
 	public User() {
-		super();
 	}
 
 	public User(String firstName, String lastName, String email, String phoneNumber) {
-		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public void setFirstName(String firstName) {
@@ -93,18 +89,10 @@ public class User implements IJPAEntity<Long>, Serializable {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public List<Solution> getUserSolutions() {
-		return userSolutions;
-	}
-
-	public void setUserSolutions(List<Solution> userSolutions) {
-		this.userSolutions = userSolutions;
-	}
-
 	/** {@inheritDoc} */
 	@Override
 	public Long getKeyValue() {
-		return userId;
+		return id;
 	}
 
 	/** {@inheritDoc} */

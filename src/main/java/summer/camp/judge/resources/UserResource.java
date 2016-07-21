@@ -14,19 +14,19 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
-
 import summer.camp.judge.commons.UnitOfWorkUtils;
 import summer.camp.judge.dao.UserDao;
 import summer.camp.judge.entities.User;
 import summer.camp.judge.validation.UserValidator;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+
 /**
  * Service for educations
  */
 @Singleton
-@Path("/protected/admin/users")
+@Path("/users")
 public class UserResource extends AbstractCRUDService<Long, User> {
 
 	private static final String ERROR_THERE_IS_NO_TASK_WITH_TASK_ID_MESSAGE = "There is no task with [taskId={0}]";
@@ -34,8 +34,8 @@ public class UserResource extends AbstractCRUDService<Long, User> {
 	/**
 	 * Constructor
 	 *
-	 * @param taskDao
-	 * @param taskValidator
+	 * @param userDao
+	 * @param userValidator
 	 * @param unitOfWorkUtils
 	 */
 	@Inject
@@ -44,17 +44,13 @@ public class UserResource extends AbstractCRUDService<Long, User> {
 	}
 
 	/**
-	 * Returns a list of all tasks
+	 * Returns a list of all users
 	 *
-	 * @return a list of all tasks
+	 * @return a list of all users
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<User> getUsers() {
-		User user1 = new User("user1", "lastName", "email", "0");
-		add(user1);
-		User user2 = new User("user2", "lastName", "email", "1");
-		add(user2);
 		return getAll();
 	}
 
@@ -130,7 +126,7 @@ public class UserResource extends AbstractCRUDService<Long, User> {
 
 	@Override
 	protected void updateEntityProperties(User persistedEntity, User entity) {
-		/// TODO
+		// / TODO
 		persistedEntity.setFirstName(entity.getFirstName());
 		persistedEntity.setLastName(entity.getLastName());
 		persistedEntity.setEmail(entity.getEmail());

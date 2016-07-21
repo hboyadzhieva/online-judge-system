@@ -26,10 +26,10 @@ import com.google.inject.Singleton;
  * Service for educations
  */
 @Singleton
-@Path("/protected/admin/tasks")
+@Path("/tasks")
 public class TaskResource extends AbstractCRUDService<Long, Task> {
 
-	private static final String ERROR_THERE_IS_NO_TASK_WITH_TASK_ID_MESSAGE = "There is no task with [taskId={0}]";
+	private static final String ERROR_THERE_IS_NO_TASK_WITH_TASK_ID_MESSAGE = "There is no task with [id={0}]";
 
 	/**
 	 * Constructor
