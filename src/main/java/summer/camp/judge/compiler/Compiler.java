@@ -1,16 +1,16 @@
 package summer.camp.judge.compiler;
 
-import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Locale;
 
@@ -24,13 +24,13 @@ import org.apache.commons.io.FileUtils;
 @SuppressWarnings("javadoc")
 public class Compiler {
 
-	private static final String CLASSES_OUTPUT_FOLDER = "./compiledTasks/";
+	private static final String CLASSES_OUTPUT_FOLDER = "/compiledTasks/";
 
 	private String currentUserClassesOutputFolder;
 
 	private File currentUserOutputFolder;
 
-	public Compiler(String userId) {
+	public Compiler(Long userId) {
 		this.currentUserClassesOutputFolder = CLASSES_OUTPUT_FOLDER + userId + "/";
 		this.currentUserOutputFolder = new File(currentUserClassesOutputFolder);
 		if (!currentUserOutputFolder.exists()) {
@@ -38,7 +38,7 @@ public class Compiler {
 		}
 	}
 
-	public void compile(JavaFileObject code) {
+	public void compile(JavaFileObject code) throws CompilationErrorException {
 		// get system compiler:
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 		// for compilation diagnostic message processing on compilation
@@ -51,7 +51,7 @@ public class Compiler {
 		task.call();
 	}
 
-	public String runIt(String className, String[] arguments) {
+	public String run(String className, String input) {
 		// Create a File object on the root of the directory
 		// containing the class file
 
@@ -68,23 +68,31 @@ public class Compiler {
 			Class thisClass = loader.loadClass(className);
 
 			Class params[] = { String[].class };
-			Object paramsObj[] = { arguments };
+			Object paramsObj[] = { null };
 			Object instance = thisClass.newInstance();
 			Method mainMethod = thisClass.getDeclaredMethod("main", params);
 
-			// run the testAdd() method on the instance:
-			PrintStream test = new PrintStream("./test");
-			System.setOut(test);
+			InputStream systemIn = System.in;
+			InputStream testInput = new ByteArrayInputStream(input.getBytes());
+			System.setIn(testInput);
+
+			PrintStream systemOut = System.out;
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			PrintStream testOutput = new PrintStream(baos);
+			System.setOut(testOutput);
+
 			mainMethod.invoke(instance, paramsObj);
-			test.flush();
-			test.close();
 
-			return null;
-			// return result();
+			System.setOut(systemOut);
+			System.setIn(systemIn);
+
+			String result = new String(baos.toByteArray(), StandardCharsets.UTF_8);
+
+			return result;
 		} catch (MalformedURLException e) {
-
+			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-
+			e.printStackTrace();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
@@ -95,21 +103,6 @@ public class Compiler {
 			}
 		}
 
-		return null;
-	}
-
-	private String result() {
-		Charset charset = Charset.forName("UTF-8");
-		try (BufferedReader reader = Files.newBufferedReader(Paths.get(currentUserClassesOutputFolder + "/out.txt"), charset)) {
-			StringBuilder builder = new StringBuilder();
-			String line = null;
-			while ((line = reader.readLine()) != null) {
-				builder.append(line);
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return null;
 	}
 

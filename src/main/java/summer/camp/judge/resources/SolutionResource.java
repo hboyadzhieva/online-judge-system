@@ -14,13 +14,18 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import summer.camp.judge.commons.UnitOfWorkUtils;
-import summer.camp.judge.dao.SolutionDao;
-import summer.camp.judge.entities.Solution;
-import summer.camp.judge.validation.SolutionValidator;
-
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+
+import summer.camp.judge.commons.UnitOfWorkUtils;
+import summer.camp.judge.compiler.TestSolution;
+import summer.camp.judge.dao.SolutionDao;
+import summer.camp.judge.dao.TaskDao;
+import summer.camp.judge.dao.UserDao;
+import summer.camp.judge.entities.Solution;
+import summer.camp.judge.entities.Task;
+import summer.camp.judge.entities.User;
+import summer.camp.judge.validation.SolutionValidator;
 
 /**
  * Service for educations
@@ -30,6 +35,14 @@ import com.google.inject.Singleton;
 public class SolutionResource extends AbstractCRUDService<Long, Solution> {
 
 	private static final String ERROR_THERE_IS_NO_TASK_WITH_TASK_ID_MESSAGE = "There is no task with [id={0}]";
+
+	private SolutionDao solutionDao;
+
+	@Inject
+	private UserDao userDao;
+
+	@Inject
+	private TaskDao taskDao;
 
 	/**
 	 * Constructor
@@ -41,6 +54,7 @@ public class SolutionResource extends AbstractCRUDService<Long, Solution> {
 	@Inject
 	public SolutionResource(SolutionDao solutionDao, SolutionValidator solutionValidator, UnitOfWorkUtils unitOfWorkUtils) {
 		super(solutionDao, solutionValidator, unitOfWorkUtils);
+		this.solutionDao = solutionDao;
 	}
 
 	/**
@@ -117,6 +131,24 @@ public class SolutionResource extends AbstractCRUDService<Long, Solution> {
 	@Path("/count")
 	public Long count() {
 		return countAll();
+	}
+
+	@POST
+	@Path("/evaluate")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response evaluateSolution(Solution solution) {
+		solutionDao.create(solution);
+		solution = solutionDao.findById(solution.getKeyValue());
+
+		User user = userDao.findById(solution.getUser().getKeyValue());
+		solution.setUser(user);
+
+		Task task = taskDao.findById(solution.getTask().getKeyValue());
+		solution.setTask(task);
+
+		TestSolution testSolution = new TestSolution(solution);
+		testSolution.evaluate();
+		return update(solution.getKeyValue(), solution);
 	}
 
 	@Override

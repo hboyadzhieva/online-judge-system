@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -25,11 +26,15 @@ public class Solution implements IJPAEntity<Long>, Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@Column(length = 256, nullable = false)
+	@Column(nullable = false)
+	@Lob
 	private String text;
 
 	@Column(length = 64, nullable = false)
 	private String language;
+
+	@Column(length = 64)
+	private String result;
 
 	@ManyToOne
 	private Task task;
@@ -91,6 +96,21 @@ public class Solution implements IJPAEntity<Long>, Serializable {
 	@Override
 	public Long getKeyValue() {
 		return id;
+	}
+
+	/**
+	 * @return the result
+	 */
+	public String getResult() {
+		return result;
+	}
+
+	/**
+	 * @param result
+	 *            the result to set
+	 */
+	public void setResult(String result) {
+		this.result = result;
 	}
 
 	/** {@inheritDoc} */
