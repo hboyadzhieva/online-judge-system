@@ -26,6 +26,13 @@
 								value="Tasks"/>
 						</customData>
 					</StandardListItem>
+					<StandardListItem title="Solutions" type="Active" press="onSolutionsPress">
+						<customData>
+							<core:CustomData
+								key="solutions"
+								value="Solutions"/>
+						</customData>
+					</StandardListItem>
 				</items>
 			</List>
 		</content>

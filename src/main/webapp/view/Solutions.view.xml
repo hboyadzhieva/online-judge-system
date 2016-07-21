@@ -1,0 +1,66 @@
+<!DOCTYPE xml>
+<mvc:View
+	controllerName="summer.camp.judge.controller.Solutions"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:l="sap.ui.layout">
+	<Page
+		id="tasksPage"
+		title="Solutions">
+		<headerContent>
+		</headerContent>
+		<content>
+			<Table id="tasksTable"
+				fixedLayout="false"
+				inset="false"
+				items="{
+					path: '/'
+				}">
+				<headerToolbar>
+					<Toolbar>
+						<Title text="Solutions" level="H2"/>
+					</Toolbar>
+				</headerToolbar>
+				<columns>
+					<Column
+						hAlign="Center">
+						<Text text="ID" />
+					</Column>
+					<Column
+						hAlign="Center">
+						<Text text="Task Name" />
+					</Column>
+					<Column
+						minScreenWidth="Tablet"
+						demandPopin="true"
+						hAlign="Center">
+						<Text text="Submitted By" />
+					</Column>
+					<Column
+						hAlign="Center">
+						<Text text="Language" />
+					</Column>
+					<Column
+						hAlign="Center">
+						<Text text="Result" />
+					</Column>
+				</columns>
+				<items>  
+					<ColumnListItem>
+						<cells>
+							<ObjectIdentifier text="{id}"/>
+							<Text text="{task/name}"/>
+							<Text text="{user/email}"/>
+							<Text text="{language}"/>
+							<Text text="{result}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</content>
+		<footer>
+			<Toolbar>
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>

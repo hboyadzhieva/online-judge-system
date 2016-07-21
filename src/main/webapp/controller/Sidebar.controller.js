@@ -11,6 +11,9 @@ sap.ui.define([
 		},
 		onTasksPress: function (oEvent) {
 			this._router.navTo('tasks');
+		},
+		onSolutionsPress: function (oEvent) {
+			this._router.navTo('solutions');
 		}
 	});
 	

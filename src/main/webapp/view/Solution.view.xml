@@ -1,0 +1,30 @@
+<!DOCTYPE xml>
+<mvc:View
+	controllerName="summer.camp.judge.controller.Solution"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:l="sap.ui.layout"
+	xmlns:form="sap.ui.layout.form">
+	<Page
+		id="tasksPage"
+		title="Solution {/id}">
+		<headerContent>
+		</headerContent>
+		<content>
+			<form:SimpleForm
+				editable="true"
+				layout="ResponsiveGridLayout" >
+				<Label text="Task Name"/>
+				<Text text="{/task/name}"/>
+				<Label text="Language"/>
+				<Text text="{/language}"/>
+				<Label text="Result"/>
+				<Text text="{/result}"/>
+			</form:SimpleForm>
+		</content>
+		<footer>
+			<Toolbar>
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>
