@@ -48,7 +48,7 @@ public class CompilerTest {
 
 	public static void main(String[] args) throws Exception {
 
-		Compiler compiler = new Compiler(15L);
+		Compiler compiler = new Compiler("testuserid");
 
 		// 1.Construct an in-memory java source file from your dynamic code
 		JavaFileObject file = getJavaFileObject();

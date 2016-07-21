@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
-Built-By: Ralitsa
-Web-ContextPath: /judge
-Build-Jdk: 1.8.0_91
+Build-Jdk: 1.7.0_79
+Built-By: I321655
 Created-By: Maven Integration for Eclipse
+Web-ContextPath: /judge
 

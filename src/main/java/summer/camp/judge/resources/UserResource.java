@@ -6,7 +6,6 @@ import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -15,26 +14,22 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
-
-import summer.camp.judge.commons.CurrentUserContext;
 import summer.camp.judge.commons.UnitOfWorkUtils;
 import summer.camp.judge.dao.UserDao;
 import summer.camp.judge.entities.User;
 import summer.camp.judge.validation.UserValidator;
+
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 /**
  * Service for educations
  */
 @Singleton
 @Path("/users")
-public class UserResource extends AbstractCRUDService<Long, User> {
+public class UserResource extends AbstractCRUDService<String, User> {
 
 	private static final String ERROR_THERE_IS_NO_TASK_WITH_TASK_ID_MESSAGE = "There is no task with [taskId={0}]";
-
-	@Inject
-	private CurrentUserContext userContext;
 
 	@Inject
 	private UserDao userDao;
@@ -71,7 +66,7 @@ public class UserResource extends AbstractCRUDService<Long, User> {
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public User getEducation(@PathParam("id") final Long id) {
+	public User getEducation(@PathParam("id") final String id) {
 		return get(id);
 	}
 
@@ -99,7 +94,7 @@ public class UserResource extends AbstractCRUDService<Long, User> {
 	@PUT
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateUser(@PathParam("id") final Long id, User user) {
+	public Response updateUser(@PathParam("id") final String id, User user) {
 		return update(id, user);
 	}
 
@@ -112,7 +107,7 @@ public class UserResource extends AbstractCRUDService<Long, User> {
 	 */
 	@DELETE
 	@Path("/{id}")
-	public Response deleteEducation(@PathParam("id") final Long id) {
+	public Response deleteEducation(@PathParam("id") final String id) {
 		return delete(id);
 	}
 
@@ -127,32 +122,33 @@ public class UserResource extends AbstractCRUDService<Long, User> {
 		return countAll();
 	}
 
-	@POST
-	@Path("/login")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response login(User user) {
-		User validatedUser = this.userDao.byEmailAndPassword(user.getEmail(), user.getPassword());
-		this.userContext.setUser(validatedUser);
-
-		if (validatedUser == null) {
-			throw new InternalServerErrorException();
-		}
-
-		return Response.ok(validatedUser).build();
-	}
-
-	@GET
-	@Path("/current")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getCurrentUser() {
-		User currentUser = this.userContext.getUser();
-
-		return Response.ok(currentUser).build();
-	}
+	//
+	// @POST
+	// @Path("/login")
+	// @Consumes(MediaType.APPLICATION_JSON)
+	// @Produces(MediaType.APPLICATION_JSON)
+	// public Response login(User user) {
+	// User validatedUser = this.userDao.byEmailAndPassword(user.getEmail(), user.getPassword());
+	// this.userContext.setUser(validatedUser);
+	//
+	// if (validatedUser == null) {
+	// throw new InternalServerErrorException();
+	// }
+	//
+	// return Response.ok(validatedUser).build();
+	// }
+	//
+	// @GET
+	// @Path("/current")
+	// @Produces(MediaType.APPLICATION_JSON)
+	// public Response getCurrentUser() {
+	// User currentUser = this.userContext.getUser();
+	//
+	// return Response.ok(currentUser).build();
+	// }
 
 	@Override
-	protected String getNotFoundMessage(Long id) {
+	protected String getNotFoundMessage(String id) {
 		return MessageFormat.format(ERROR_THERE_IS_NO_TASK_WITH_TASK_ID_MESSAGE, id);
 	}
 

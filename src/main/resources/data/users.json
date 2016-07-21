@@ -1,5 +1,6 @@
 [
 	{
+		id: "testuser",
 		firstName: "Pesho",
 		lastName: "Peshev",
 		email: "pesho@sap.com",

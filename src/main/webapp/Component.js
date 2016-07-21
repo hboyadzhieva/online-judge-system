@@ -23,11 +23,6 @@ sap.ui.define([
 				},
 				routes: [
 					{
-						pattern: "",
-						name: "sidebar",
-						target: ["loginView"]
-					},
-					{
 						pattern: "tasks",
 						name: "tasks",
 						target: ["sidebarView", "tasksView"]
@@ -39,11 +34,6 @@ sap.ui.define([
 					}
 				],
 				targets: {
-					loginView: {
-						viewName: "Login",
-						viewLevel: 2,
-						controlAggregation: "detailPages"
-					},
 					taskView: {
 						viewName: "Task",
 						viewLevel: 3,

@@ -14,7 +14,7 @@ import summer.camp.judge.entities.User;
 /**
  * DAO class for {@link Task}
  */
-public class UserDao extends AbstractJpaDao<Long, User> {
+public class UserDao extends AbstractJpaDao<String, User> {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserDao.class);
 
@@ -24,7 +24,7 @@ public class UserDao extends AbstractJpaDao<Long, User> {
 
 	@Override
 	public void create(final User user) {
-		user.setPassword(getHashedPassword(user.getPassword()));
+		// user.setPassword(getHashedPassword(user.getPassword()));
 
 		getEntityManager().getTransaction().begin();
 		getEntityManager().persist(user);

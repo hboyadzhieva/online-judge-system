@@ -9,18 +9,19 @@ import javax.servlet.ServletContextEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.persist.PersistService;
-import com.google.inject.servlet.GuiceServletContextListener;
-
 import summer.camp.judge.resources.GeneralExceptionHandler;
 import summer.camp.judge.resources.GsonMessageBodyHandler;
 import summer.camp.judge.resources.RolesPublicService;
 import summer.camp.judge.resources.SolutionResource;
 import summer.camp.judge.resources.TaskResource;
 import summer.camp.judge.resources.TestCaseResource;
+import summer.camp.judge.resources.UserRegistrationResource;
 import summer.camp.judge.resources.UserResource;
+
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.persist.PersistService;
+import com.google.inject.servlet.GuiceServletContextListener;
 
 /**
  * This class handles the initialization of all Guice modules and all REST API
@@ -71,13 +72,12 @@ public class ApplicationContextListener extends GuiceServletContextListener {
 		getSingletons().add(new GsonMessageBodyHandler<Object>());
 		getSingletons().add(new GeneralExceptionHandler());
 
-		// Services protected with the Admin role
 		getSingletons().add(injector.getInstance(TaskResource.class));
 		getSingletons().add(injector.getInstance(UserResource.class));
 		getSingletons().add(injector.getInstance(TestCaseResource.class));
 		getSingletons().add(injector.getInstance(SolutionResource.class));
+		getSingletons().add(injector.getInstance(UserRegistrationResource.class));
 
-		// Public services
 		getSingletons().add(injector.getInstance(RolesPublicService.class));
 
 	}

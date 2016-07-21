@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -16,13 +14,12 @@ import com.google.gson.Gson;
  */
 @Entity
 @Table(name = "T_USER")
-public class User implements IJPAEntity<Long>, Serializable {
+public class User implements IJPAEntity<String>, Serializable {
 
 	private static final long serialVersionUID = 6014718856140269190L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private String id;
 
 	@Column(length = 64, nullable = false)
 	private String firstName;
@@ -33,8 +30,8 @@ public class User implements IJPAEntity<Long>, Serializable {
 	@Column(length = 256, nullable = false)
 	private String email;
 
-	@Column(length = 256, nullable = false)
-	private String password;
+	// @Column(length = 256, nullable = false)
+	// private String password;
 
 	@Column(length = 256)
 	private String phoneNumber;
@@ -53,15 +50,15 @@ public class User implements IJPAEntity<Long>, Serializable {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.password = password;
+		// this.password = password;
 		this.phoneNumber = phoneNumber;
 	}
 
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -85,13 +82,13 @@ public class User implements IJPAEntity<Long>, Serializable {
 		this.email = email;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
+	// public String getPassword() {
+	// return password;
+	// }
+	//
+	// public void setPassword(String password) {
+	// this.password = password;
+	// }
 
 	public String getPhoneNumber() {
 		return phoneNumber;
@@ -103,7 +100,7 @@ public class User implements IJPAEntity<Long>, Serializable {
 
 	/** {@inheritDoc} */
 	@Override
-	public Long getKeyValue() {
+	public String getKeyValue() {
 		return id;
 	}
 

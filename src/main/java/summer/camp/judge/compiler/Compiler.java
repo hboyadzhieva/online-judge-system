@@ -30,7 +30,7 @@ public class Compiler {
 
 	private File currentUserOutputFolder;
 
-	public Compiler(Long userId) {
+	public Compiler(String userId) {
 		this.currentUserClassesOutputFolder = CLASSES_OUTPUT_FOLDER + userId + "/";
 		this.currentUserOutputFolder = new File(currentUserClassesOutputFolder);
 		if (!currentUserOutputFolder.exists()) {

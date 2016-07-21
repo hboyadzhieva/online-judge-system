@@ -60,7 +60,7 @@ public class DBInitializer {
 	public void initData() {
 		new DataImport<Long, TestCase>().importFromJSON(Arrays.asList(parseJsonFileConfiguration(TEST_CASES, TestCase[].class)), testCaseDao);
 		new DataImport<Long, Task>().importFromJSON(Arrays.asList(parseJsonFileConfiguration(TASKS, Task[].class)), taskDao);
-		new DataImport<Long, User>().importFromJSON(Arrays.asList(parseJsonFileConfiguration(USERS, User[].class)), userDao);
+		new DataImport<String, User>().importFromJSON(Arrays.asList(parseJsonFileConfiguration(USERS, User[].class)), userDao);
 		new DataImport<Long, Solution>().importFromJSON(Arrays.asList(parseJsonFileConfiguration(SOLUTIONS, Solution[].class)), solutionDao);
 	}
 
