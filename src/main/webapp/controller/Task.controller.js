@@ -6,20 +6,9 @@ sap.ui.define([
 	
 	var Controller = Controller.extend('summer.camp.judge.controller.Task', {
 		_routePatternMatched: function (oEvent) {
-			var sId = oEvent.getParameter('arguments').id,
-				oTasksModel, aTasks, oTask;
+			var sId = oEvent.getParameter('arguments').id;
 			
-			oTasksModel = this.getView().getModel('Tasks');
-			aTasks = oTasksModel.getProperty('/');
-			
-			for (var i = 0; i < aTasks.length; i++) {
-				if (aTasks[i].id == sId) {
-					oTask = aTasks[i];
-					break;
-				}
-			}
-			
-			this.getView().setModel(new JSONModel(oTask));
+			this.getView().setModel(new JSONModel('api/v1/tasks/' + sId));
 		},
 		onInit: function () {
 			var oComponent = this.getOwnerComponent();
@@ -28,18 +17,31 @@ sap.ui.define([
 			this._router.getRoute('task').attachPatternMatched(this._routePatternMatched, this);
 		},
 		onSubmitPress: function (oEvent) {
-			var oTaskModel, oTask;
+			var sLanguage = this.byId('languageSelect').getSelectedItem().getKey(),
+				sSolution = this.byId('solutionTextArea').getValue(),
+				oTaskModel, oTask;
 			
 			oTaskModel = this.getView().getModel();
 			oTask = oTaskModel.getProperty('/');
 			
-			jQuery.ajax({
-				method: 'POST',
-				url: '',
-				contentType : "application/json; charset=utf-8",
-				data: JSON.stringify({
-					
-				})
+			var oUserModel = new JSONModel('api/v1/users/current');
+			oUserModel.attachRequestCompleted(function () {
+				var oUser = oUserModel.getProperty('/');
+				
+				jQuery.ajax({
+					method: 'POST',
+					url: 'api/v1/solutions/evaluate',
+					contentType : "application/json; charset=utf-8",
+					data: JSON.stringify({
+						text: sSolution,
+						task: oTask,
+						user: oUser
+					})
+				}).done(function (response) {
+					console.log(response);
+				}).fail(function (error) {
+					console.log(error);
+				});
 			});
 		}
 	});

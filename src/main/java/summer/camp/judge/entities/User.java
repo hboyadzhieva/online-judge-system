@@ -33,6 +33,9 @@ public class User implements IJPAEntity<Long>, Serializable {
 	@Column(length = 256, nullable = false)
 	private String email;
 
+	@Column(length = 256, nullable = false)
+	private String password;
+
 	@Column(length = 256)
 	private String phoneNumber;
 
@@ -46,10 +49,11 @@ public class User implements IJPAEntity<Long>, Serializable {
 	public User() {
 	}
 
-	public User(String firstName, String lastName, String email, String phoneNumber) {
+	public User(String firstName, String lastName, String email, String password, String phoneNumber) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
+		this.password = password;
 		this.phoneNumber = phoneNumber;
 	}
 
@@ -79,6 +83,14 @@ public class User implements IJPAEntity<Long>, Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getPhoneNumber() {

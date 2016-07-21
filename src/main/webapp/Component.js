@@ -25,7 +25,7 @@ sap.ui.define([
 					{
 						pattern: "",
 						name: "sidebar",
-						target: "sidebarView"
+						target: ["loginView"]
 					},
 					{
 						pattern: "tasks",
@@ -39,6 +39,11 @@ sap.ui.define([
 					}
 				],
 				targets: {
+					loginView: {
+						viewName: "Login",
+						viewLevel: 2,
+						controlAggregation: "detailPages"
+					},
 					taskView: {
 						viewName: "Task",
 						viewLevel: 3,
@@ -90,8 +95,8 @@ sap.ui.define([
 				}
 			];
 			
-			var oTasksModel = new JSONModel(aTasks);
-			this.setModel(oTasksModel, 'Tasks')
+			var oTasksModel = new JSONModel('api/v1/tasks');
+			this.setModel(oTasksModel, 'Tasks');
 			
 			// set plants model
 			//var oPlantsModel = new JSONModel('rest/plants');

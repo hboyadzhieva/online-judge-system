@@ -34,13 +34,7 @@
 						minScreenWidth="Tablet"
 						demandPopin="true"
 						hAlign="Center">
-						<Text text="Description" />
-					</Column>
-					<Column
-						minScreenWidth="Tablet"
-						demandPopin="true"
-						hAlign="Center">
-						<Text text="Link to Document" />
+						<Text text="Statement" />
 					</Column>
 					<Column
 						hAlign="Center">
@@ -52,8 +46,7 @@
 						<cells>
 							<ObjectIdentifier text="{Tasks>id}"/>
 							<Text text="{Tasks>name}"/>
-							<Text text="{Tasks>description}"/>
-							<Link text="Problem" href="{Tasks>linkToDocument}"/>
+							<Text text="{Tasks>statement}"/>
 							<Link text="Submit" href="#/tasks/{Tasks>id}"/>
 						</cells>
 					</ColumnListItem>

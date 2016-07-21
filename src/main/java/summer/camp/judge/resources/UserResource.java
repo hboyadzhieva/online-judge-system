@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -14,13 +15,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+
+import summer.camp.judge.commons.CurrentUserContext;
 import summer.camp.judge.commons.UnitOfWorkUtils;
 import summer.camp.judge.dao.UserDao;
 import summer.camp.judge.entities.User;
 import summer.camp.judge.validation.UserValidator;
-
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 /**
  * Service for educations
@@ -30,6 +32,12 @@ import com.google.inject.Singleton;
 public class UserResource extends AbstractCRUDService<Long, User> {
 
 	private static final String ERROR_THERE_IS_NO_TASK_WITH_TASK_ID_MESSAGE = "There is no task with [taskId={0}]";
+
+	@Inject
+	private CurrentUserContext userContext;
+
+	@Inject
+	private UserDao userDao;
 
 	/**
 	 * Constructor
@@ -117,6 +125,30 @@ public class UserResource extends AbstractCRUDService<Long, User> {
 	@Path("/count")
 	public Long count() {
 		return countAll();
+	}
+
+	@POST
+	@Path("/login")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response login(User user) {
+		User validatedUser = this.userDao.byEmailAndPassword(user.getEmail(), user.getPassword());
+		this.userContext.setUser(validatedUser);
+
+		if (validatedUser == null) {
+			throw new InternalServerErrorException();
+		}
+
+		return Response.ok(validatedUser).build();
+	}
+
+	@GET
+	@Path("/current")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getCurrentUser() {
+		User currentUser = this.userContext.getUser();
+
+		return Response.ok(currentUser).build();
 	}
 
 	@Override

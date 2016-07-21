@@ -3,6 +3,7 @@
 		firstName: "Pesho",
 		lastName: "Peshev",
 		email: "pesho@sap.com",
+		password: 123456,
 		phoneNumber: "0867331243"
 	}
 ]

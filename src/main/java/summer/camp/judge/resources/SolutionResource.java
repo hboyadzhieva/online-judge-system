@@ -17,6 +17,7 @@ import javax.ws.rs.core.Response;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import summer.camp.judge.commons.CurrentUserContext;
 import summer.camp.judge.commons.UnitOfWorkUtils;
 import summer.camp.judge.compiler.TestSolution;
 import summer.camp.judge.dao.SolutionDao;
@@ -30,6 +31,7 @@ import summer.camp.judge.validation.SolutionValidator;
 /**
  * Service for educations
  */
+
 @Singleton
 @Path("/solutions")
 public class SolutionResource extends AbstractCRUDService<Long, Solution> {
@@ -39,6 +41,9 @@ public class SolutionResource extends AbstractCRUDService<Long, Solution> {
 	private SolutionDao solutionDao;
 
 	private UnitOfWorkUtils unitOfWorkUtils;
+
+	@Inject
+	private CurrentUserContext userContext;
 
 	@Inject
 	private UserDao userDao;
@@ -141,6 +146,9 @@ public class SolutionResource extends AbstractCRUDService<Long, Solution> {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Solution evaluateSolution(Solution solution) {
+		User currentUser = this.userContext.getUser();
+		solution.setUser(currentUser);
+
 		unitOfWorkUtils.begin();
 		solutionDao.create(solution);
 		solution = solutionDao.findById(solution.getKeyValue());

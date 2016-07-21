@@ -16,16 +16,20 @@
 				layout="ResponsiveGridLayout" >
 				<Label text="Name"/>
 				<Text text="{/name}"/>
-				<Label text="Description"/>
-				<Text text="{/description}"/>
-				<Label text="Link to Document"/>
-				<Link text="Link to Document" href="{/linkToDocument}"/>
+				<Label text="Statement"/>
+				<Text text="{/statement}"/>
+				<Label text="Sample Input"/>
+				<Text text="{/sampleInput}"/>
+				<Label text="Sample Output"/>
+				<Text text="{/sampleOutput}"/>
+				<Label text="Time Limit"/>
+				<Text text="{/timeLimit} ms"/>
 				<Label text="Language"/>
-				<Select width="7em">
+				<Select id="languageSelect" width="7em">
 					<core:Item key="java" text="Java"/>
 				</Select>
 				<Label text="Solution"/>
-				<TextArea growing="true" width="100%"/>
+				<TextArea id="solutionTextArea" growing="true" width="100%" />
 				<Label text=""/>
 				<Button width="7em" text="Submit" press="onSubmitPress"/>
 			</form:SimpleForm>

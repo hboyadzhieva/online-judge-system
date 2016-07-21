@@ -1,0 +1,30 @@
+<!DOCTYPE xml>
+<mvc:View
+	controllerName="summer.camp.judge.controller.Login"
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:form="sap.ui.layout.form">
+	<Page
+		id="loginPage"
+		title="Login">
+		<headerContent>
+		</headerContent>
+		<content>
+			<form:SimpleForm
+				editable="true"
+				layout="ResponsiveGridLayout" >
+				<Label text="Email"/>
+				<Input id="emailId" placeholder="Email" width="16em"/>
+				<Label text="Password"/>
+				<Input id="passwordId" type="Password" placeholder="Password" width="16em"/>
+				<Label text=""/>
+				<Button text="Login" width="6em" press="onLoginPress"/>
+			</form:SimpleForm>
+		</content>
+		<footer>
+			<Toolbar>
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>

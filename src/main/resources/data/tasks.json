@@ -3,7 +3,7 @@
 		name: quicksort,
 		statement: yslovie,
 		sampleInput: 123,
-		sampleOutpit: 356,
+		sampleOutput: 356,
 		timeLimit: 1244,
 		testCases: [{
 			id: 1
