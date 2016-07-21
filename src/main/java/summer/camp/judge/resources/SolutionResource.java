@@ -38,6 +38,8 @@ public class SolutionResource extends AbstractCRUDService<Long, Solution> {
 
 	private SolutionDao solutionDao;
 
+	private UnitOfWorkUtils unitOfWorkUtils;
+
 	@Inject
 	private UserDao userDao;
 
@@ -55,6 +57,7 @@ public class SolutionResource extends AbstractCRUDService<Long, Solution> {
 	public SolutionResource(SolutionDao solutionDao, SolutionValidator solutionValidator, UnitOfWorkUtils unitOfWorkUtils) {
 		super(solutionDao, solutionValidator, unitOfWorkUtils);
 		this.solutionDao = solutionDao;
+		this.unitOfWorkUtils = unitOfWorkUtils;
 	}
 
 	/**
@@ -136,7 +139,9 @@ public class SolutionResource extends AbstractCRUDService<Long, Solution> {
 	@POST
 	@Path("/evaluate")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response evaluateSolution(Solution solution) {
+	@Produces(MediaType.APPLICATION_JSON)
+	public Solution evaluateSolution(Solution solution) {
+		unitOfWorkUtils.begin();
 		solutionDao.create(solution);
 		solution = solutionDao.findById(solution.getKeyValue());
 
@@ -148,7 +153,9 @@ public class SolutionResource extends AbstractCRUDService<Long, Solution> {
 
 		TestSolution testSolution = new TestSolution(solution);
 		testSolution.evaluate();
-		return update(solution.getKeyValue(), solution);
+		update(solution.getKeyValue(), solution);
+		unitOfWorkUtils.end();
+		return solution;
 	}
 
 	@Override

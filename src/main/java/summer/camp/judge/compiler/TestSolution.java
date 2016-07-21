@@ -35,7 +35,7 @@ public class TestSolution {
 		Compiler compiler = new Compiler(solution.getUser().getKeyValue());
 		try {
 			compiler.compile(file);
-		} catch (CompilationErrorException e) {
+		} catch (RuntimeException e) {
 			/// TODO add somewhere the exception message
 			solution.setResult(COMPILATION_ERROR_MESSAGE);
 			return;
@@ -51,11 +51,11 @@ public class TestSolution {
 			String programOutput = compiler.run(className, input);
 			long endTime = System.currentTimeMillis();
 
-			if (((endTime - startTime) > timeLimit) && (timeLimit != null)) {
+			if ((timeLimit != null) && ((endTime - startTime) > timeLimit)) {
 				addToResult(result, TIME_LIMIT_EXPIRED_MESSAGE);
 			}
 			String testCaseOutput = testCase.getOutput();
-			if (programOutput.equals(testCaseOutput)) {
+			if (testCaseOutput.equals(programOutput)) {
 				addToResult(result, OK_MESSAGE);
 			} else {
 				addToResult(result, WRONG_ANSWER_MESSAGE);
