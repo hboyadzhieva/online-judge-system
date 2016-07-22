@@ -1,0 +1,52 @@
+<!DOCTYPE xml>
+<mvc:View
+	controllerName="summer.camp.judge.controller.Solution"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:l="sap.ui.layout"
+	xmlns:u="sap.ui.unified"
+	xmlns:form="sap.ui.layout.form">
+	<u:Shell>
+			<u:headItems>
+				<u:ShellHeadItem
+					tooltip="Home"
+					icon="sap-icon://home"
+					visible="true"
+					press="handlePressHome" />
+			</u:headItems>
+			<u:headEndItems>
+				<u:ShellHeadItem
+					icon="sap-icon://log"
+					tooltip="Logoff"
+					press="handleLogoffPress" />
+			</u:headEndItems>
+			<u:user>
+				<u:ShellHeadUserItem
+					image="sap-icon://person-placeholder"
+					username="Kiril Kabakchiev"
+					press="handleUserItemPressed" />
+			</u:user>
+	<Page
+		id="tasksPage"
+		title="Solution {/id}">
+		<headerContent>
+		</headerContent>
+		<content>
+			<form:SimpleForm
+				editable="true"
+				layout="ResponsiveGridLayout" >
+				<Label text="Task Name"/>
+				<Text text="{/task/name}"/>
+				<Label text="Language"/>
+				<Text text="{/language}"/>
+				<Label text="Result"/>
+				<Text text="{/result}"/>
+			</form:SimpleForm>
+		</content>
+		<footer>
+			<Toolbar>
+			</Toolbar>
+		</footer>
+	</Page>
+	</u:Shell>
+</mvc:View>

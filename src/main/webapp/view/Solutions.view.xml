@@ -1,6 +1,6 @@
 <!DOCTYPE xml>
 <mvc:View
-	controllerName="summer.camp.judge.controller.Tasks"
+	controllerName="summer.camp.judge.controller.Solutions"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:l="sap.ui.layout"
@@ -27,7 +27,7 @@
 			</u:user>
 	<Page
 		id="tasksPage"
-		title="Tasks">
+		title="Solutions">
 		<headerContent>
 		</headerContent>
 		<content>
@@ -35,11 +35,11 @@
 				fixedLayout="false"
 				inset="false"
 				items="{
-					path: 'Tasks>/'
+					path: '/'
 				}">
 				<headerToolbar>
 					<Toolbar>
-						<Title text="Tasks" level="H2"/>
+						<Title text="Solutions" level="H2"/>
 					</Toolbar>
 				</headerToolbar>
 				<columns>
@@ -49,26 +49,31 @@
 					</Column>
 					<Column
 						hAlign="Center">
-						<Text text="Name" />
+						<Text text="Task Name" />
 					</Column>
 					<Column
 						minScreenWidth="Tablet"
 						demandPopin="true"
 						hAlign="Center">
-						<Text text="Statement" />
+						<Text text="Submitted By" />
 					</Column>
 					<Column
 						hAlign="Center">
-						<Text text="Solution" />
+						<Text text="Language" />
+					</Column>
+					<Column
+						hAlign="Center">
+						<Text text="Result" />
 					</Column>
 				</columns>
 				<items>  
 					<ColumnListItem>
 						<cells>
-							<ObjectIdentifier text="{Tasks>id}"/>
-							<Text text="{Tasks>name}"/>
-							<Text text="{Tasks>statement}"/>
-							<Link text="Submit" href="#/tasks/{Tasks>id}"/>
+							<ObjectIdentifier text="{id}"/>
+							<Text text="{task/name}"/>
+							<Text text="{user/email}"/>
+							<Text text="{language}"/>
+							<Text text="{result}"/>
 						</cells>
 					</ColumnListItem>
 				</items>

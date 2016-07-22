@@ -31,6 +31,16 @@ sap.ui.define([
 						pattern: "tasks/{id}",
 						name: "task",
 						target: ["sidebarView", "taskView"]
+					},
+					{
+						pattern: "solution/{id}",
+						name: "solution",
+						target: ["sidebarView", "solutionView"]
+					},
+					{
+						pattern: "solutions",
+						name: "solutions",
+						target: ["sidebarView", "solutionsView"]
 					}
 				],
 				targets: {
@@ -42,6 +52,16 @@ sap.ui.define([
 					tasksView: {
 						viewName: "Tasks",
 						viewLevel: 2,
+						controlAggregation: "detailPages"
+					},
+					solutionView: {
+						viewName: "Solution",
+						viewLevel: 3,
+						controlAggregation: "detailPages"
+					},
+					solutionsView: {
+						viewName: "Solutions",
+						viewLevel: 3,
 						controlAggregation: "detailPages"
 					},
 					sidebarView: {
@@ -87,10 +107,6 @@ sap.ui.define([
 			
 			var oTasksModel = new JSONModel('api/v1/tasks');
 			this.setModel(oTasksModel, 'Tasks');
-			
-			// set plants model
-			//var oPlantsModel = new JSONModel('rest/plants');
-			//this.setModel(oPlantsModel, 'plants');
 			
 			this._router = this.getRouter();
 

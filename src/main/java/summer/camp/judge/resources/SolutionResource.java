@@ -22,6 +22,7 @@ import summer.camp.judge.dao.UserDao;
 import summer.camp.judge.entities.Solution;
 import summer.camp.judge.entities.Task;
 import summer.camp.judge.entities.User;
+import summer.camp.judge.request.UserManager;
 import summer.camp.judge.validation.SolutionValidator;
 
 import com.google.inject.Inject;
@@ -142,8 +143,8 @@ public class SolutionResource extends AbstractCRUDService<Long, Solution> {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Solution evaluateSolution(Solution solution) {
-		// User currentUser = this.userContext.getUser();
-		// solution.setUser(currentUser);
+
+		solution.setUser(userDao.findById(UserManager.getUsername()));
 
 		unitOfWorkUtils.begin();
 		solutionDao.create(solution);

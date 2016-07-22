@@ -17,31 +17,27 @@ sap.ui.define([
 			this._router.getRoute('task').attachPatternMatched(this._routePatternMatched, this);
 		},
 		onSubmitPress: function (oEvent) {
-			var sLanguage = this.byId('languageSelect').getSelectedItem().getKey(),
+			var _this = this,
+				sLanguage = this.byId('languageSelect').getSelectedItem().getKey(),
 				sSolution = this.byId('solutionTextArea').getValue(),
 				oTaskModel, oTask;
 			
 			oTaskModel = this.getView().getModel();
 			oTask = oTaskModel.getProperty('/');
 			
-			var oUserModel = new JSONModel('api/v1/users/current');
-			oUserModel.attachRequestCompleted(function () {
-				var oUser = oUserModel.getProperty('/');
-				
-				jQuery.ajax({
-					method: 'POST',
-					url: 'api/v1/solutions/evaluate',
-					contentType : "application/json; charset=utf-8",
-					data: JSON.stringify({
-						text: sSolution,
-						task: oTask,
-						user: oUser
-					})
-				}).done(function (response) {
-					console.log(response);
-				}).fail(function (error) {
-					console.log(error);
-				});
+			jQuery.ajax({
+				method: 'POST',
+				url: 'api/v1/solutions/evaluate',
+				contentType : "application/json; charset=utf-8",
+				data: JSON.stringify({
+					language: sLanguage,
+					text: sSolution,
+					task: oTask
+				})
+			}).done(function (response) {
+				_this._router.navTo('solution', {id: response.id});
+			}).fail(function (error) {
+				console.log(error);
 			});
 		}
 	});
