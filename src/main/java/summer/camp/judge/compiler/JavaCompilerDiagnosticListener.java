@@ -27,8 +27,15 @@ public class JavaCompilerDiagnosticListener implements DiagnosticListener<JavaFi
 		exceptionMessage.append(MESSAGE_HEADER);
 
 		exceptionMessage.append(NEW_LINE);
+		exceptionMessage.append("Exception type -> ");
+		exceptionMessage.append(diagnostic.getKind());
+		exceptionMessage.append(NEW_LINE);
 		exceptionMessage.append(LINE_NUMBER);
 		exceptionMessage.append(diagnostic.getLineNumber());
+
+		exceptionMessage.append(NEW_LINE);
+		exceptionMessage.append("Column number -> ");
+		exceptionMessage.append(diagnostic.getColumnNumber());
 
 		exceptionMessage.append(NEW_LINE);
 		exceptionMessage.append(CODE);
@@ -38,9 +45,9 @@ public class JavaCompilerDiagnosticListener implements DiagnosticListener<JavaFi
 		exceptionMessage.append(MESSAGE);
 		exceptionMessage.append(diagnostic.getMessage(Locale.ENGLISH));
 
-		exceptionMessage.append(NEW_LINE);
-		exceptionMessage.append(SOURCE);
-		exceptionMessage.append(diagnostic.getSource());
+		// exceptionMessage.append(NEW_LINE);
+		// exceptionMessage.append(SOURCE);
+		// exceptionMessage.append(diagnostic.getMessage(Locale.ENGLISH));
 
 		throw new CompilationErrorException(exceptionMessage.toString());
 	}

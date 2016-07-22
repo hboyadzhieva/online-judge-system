@@ -44,7 +44,7 @@
 				<Label text="Sample Output"/>
 				<Text text="{/sampleOutput}"/>
 				<Label text="Time Limit"/>
-				<Text text="{/timeLimit} ms"/>
+				<Text text="{/timelimit} ms"/>
 				<Label text="Language"/>
 				<Select id="languageSelect" width="7em">
 					<core:Item key="java" text="Java"/>

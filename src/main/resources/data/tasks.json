@@ -1,15 +1,73 @@
 [
 	{
-		name: quicksort,
-		statement: yslovie,
-		sampleInput: 123,
-		sampleOutput: 356,
-		timeLimit: 1244,
+		name: bridge,
+		statement: "https://drive.google.com/open?id=0B-XigBBeYTv7TS16RTJtV3NPYmc",
+		sampleInput: "5 1 4",
+		sampleOutput: 1,
+		timelimit: 1000,
 		testCases: [{
 			id: 1
 		},
 		{ 
 			id: 2
+		}]
+	},
+	{
+		name: cars,
+		statement: "https://drive.google.com/open?id=0B-XigBBeYTv7YzY2cS0zSTA0V3M",
+		sampleInput: "9 4 3 9 0 6 2 1 7 5 8 0 9 8 1 6 4 3 7 5 2",
+		sampleOutput: 6,
+		timelimit: 1244,
+		testCases: [{
+			id: 3
+		},
+		{ 
+			id: 4
+		},
+		{
+			id: 5
+		},
+		{ 
+			id: 6
+		}]
+	},
+	{
+		name: digits,
+		statement: "https://drive.google.com/open?id=0B-XigBBeYTv7dW9PUkY0VE85bU0",
+		sampleInput: "18 10",
+		sampleOutput: "3 6",
+		timelimit: 2000,
+		testCases: [{
+			id: 7
+		},
+		{ 
+			id: 8
+		}]
+	},
+	{
+		name: "sort ten integers",
+		statement: "#",
+		sampleInput: "5 8 1 3 2 4 6 9 7 0",
+		sampleOutput: "0 1 2 3 4 5 6 7 8 9",
+		timelimit: 1000,
+		testCases: [{
+			id: 9
+		},
+		{ 
+			id: 10
+		}]
+	},
+	{
+		name: "sum two integers",
+		statement: "#",
+		sampleInput: "500 700",
+		sampleOutput: "1200",
+		timelimit: 1000,
+		testCases: [{
+			id: 11
+		},
+		{ 
+			id: 12
 		}]
 	}
 ]

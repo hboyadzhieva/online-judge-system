@@ -112,7 +112,8 @@ sap.ui.define([
 
 			// initialize the router
 			this._router.initialize();
-
+			
+			this._router.navTo('tasks');
 		},
 
 		createContent: function () {
