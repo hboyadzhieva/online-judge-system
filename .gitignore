@@ -26,3 +26,7 @@ local.properties
 *.launch
 # Mac specific
 .DS_Store
+
+# sbteclipse plugin
+.target
+*/target/*
