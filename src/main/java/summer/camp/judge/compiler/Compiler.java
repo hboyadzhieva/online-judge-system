@@ -44,6 +44,7 @@ public class Compiler {
 		// for compilation diagnostic message processing on compilation
 		// WARNING/ERROR
 		JavaCompilerDiagnosticListener diagnosticListener = new JavaCompilerDiagnosticListener();
+		System.out.println(System.getProperty("java.home"));
 		StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnosticListener, Locale.ENGLISH, null);
 		// specify classes output folder
 		Iterable<String> options = Arrays.asList("-d", currentUserClassesOutputFolder, "-s", currentUserClassesOutputFolder);
@@ -51,7 +52,7 @@ public class Compiler {
 		task.call();
 	}
 
-	public String run(String className, String input) {
+	public String run(String className, String input) throws ExecutionException {
 		// Create a File object on the root of the directory
 		// containing the class file
 
@@ -94,7 +95,7 @@ public class Compiler {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			throw new ExecutionException(ex.getMessage(), ex);
 		} finally {
 			try {
 				loader.close();

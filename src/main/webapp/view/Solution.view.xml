@@ -41,6 +41,8 @@
 				<Text text="{/language}"/>
 				<Label text="Result"/>
 				<Text text="{/result}"/>
+				<Label text="Logs"/>
+				<Text text="{/logs}"/>
 			</form:SimpleForm>
 		</content>
 		<footer>

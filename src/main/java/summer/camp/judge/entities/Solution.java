@@ -36,6 +36,10 @@ public class Solution implements IJPAEntity<Long>, Serializable {
 	@Column(length = 64)
 	private String result;
 
+	@Column
+	@Lob
+	private String logs;
+
 	@ManyToOne
 	private Task task;
 
@@ -126,6 +130,14 @@ public class Solution implements IJPAEntity<Long>, Serializable {
 	 */
 	public String toJson() {
 		return new Gson().toJson(this);
+	}
+
+	public String getLogs() {
+		return logs;
+	}
+
+	public void setLogs(String logs) {
+		this.logs = logs;
 	}
 
 }

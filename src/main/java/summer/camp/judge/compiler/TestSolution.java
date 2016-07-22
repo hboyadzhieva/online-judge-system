@@ -1,10 +1,14 @@
 package summer.camp.judge.compiler;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.tools.JavaFileObject;
+
+import org.apache.commons.lang.exception.ExceptionUtils;
 
 import summer.camp.judge.entities.Solution;
 import summer.camp.judge.entities.TestCase;
@@ -19,6 +23,8 @@ public class TestSolution {
 	private static final String TIME_LIMIT_EXPIRED_MESSAGE = "TL";
 
 	private static final String COMPILATION_ERROR_MESSAGE = "CE";
+
+	private static final String RUNTIME_ERROR_MESSAGE = "RE";
 
 	Solution solution;
 
@@ -36,7 +42,11 @@ public class TestSolution {
 		try {
 			compiler.compile(file);
 		} catch (RuntimeException e) {
-			/// TODO add somewhere the exception message
+			Throwable rootCause = ExceptionUtils.getRootCause(e);
+			StringWriter sw = new StringWriter();
+			PrintWriter pw = new PrintWriter(sw);
+			rootCause.printStackTrace(pw);
+			solution.setLogs(sw.toString());
 			solution.setResult(COMPILATION_ERROR_MESSAGE);
 			return;
 		}
@@ -45,24 +55,36 @@ public class TestSolution {
 		StringBuilder result = new StringBuilder();
 
 		List<TestCase> testCases = solution.getTask().getTestCases();
-		for (TestCase testCase : testCases) {
-			String input = testCase.getInput();
-			long startTime = System.currentTimeMillis();
-			String programOutput = compiler.run(className, input);
-			long endTime = System.currentTimeMillis();
+		try {
 
-			if ((timeLimit != null) && ((endTime - startTime) > timeLimit)) {
-				addToResult(result, TIME_LIMIT_EXPIRED_MESSAGE);
+			for (TestCase testCase : testCases) {
+				String input = testCase.getInput();
+				long startTime = System.currentTimeMillis();
+				String programOutput = compiler.run(className, input);
+				long endTime = System.currentTimeMillis();
+
+				if ((timeLimit != null) && ((endTime - startTime) > timeLimit)) {
+					addToResult(result, TIME_LIMIT_EXPIRED_MESSAGE);
+				}
+				String testCaseOutput = testCase.getOutput();
+				if (testCaseOutput.equals(programOutput)) {
+					addToResult(result, OK_MESSAGE);
+				} else {
+					addToResult(result, WRONG_ANSWER_MESSAGE);
+				}
 			}
-			String testCaseOutput = testCase.getOutput();
-			if (testCaseOutput.equals(programOutput)) {
-				addToResult(result, OK_MESSAGE);
-			} else {
-				addToResult(result, WRONG_ANSWER_MESSAGE);
-			}
+		} catch (ExecutionException ex) {
+			Throwable rootCause = ExceptionUtils.getRootCause(ex);
+			StringWriter sw = new StringWriter();
+			PrintWriter pw = new PrintWriter(sw);
+			rootCause.printStackTrace(pw);
+			solution.setLogs(sw.toString());
+			solution.setResult(RUNTIME_ERROR_MESSAGE);
 		}
 
-		solution.setResult(result.toString());
+		if (solution.getResult() == null) {
+			solution.setResult(result.toString());
+		}
 
 		compiler.cleanClassOutputFolder();
 	}
