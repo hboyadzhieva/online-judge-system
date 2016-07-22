@@ -14,19 +14,20 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+
 import summer.camp.judge.commons.UnitOfWorkUtils;
 import summer.camp.judge.compiler.TestSolution;
 import summer.camp.judge.dao.SolutionDao;
 import summer.camp.judge.dao.TaskDao;
 import summer.camp.judge.dao.UserDao;
+import summer.camp.judge.email.EmailSender;
 import summer.camp.judge.entities.Solution;
 import summer.camp.judge.entities.Task;
 import summer.camp.judge.entities.User;
 import summer.camp.judge.request.UserManager;
 import summer.camp.judge.validation.SolutionValidator;
-
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 /**
  * Service for educations
@@ -159,6 +160,17 @@ public class SolutionResource extends AbstractCRUDService<Long, Solution> {
 		TestSolution testSolution = new TestSolution(solution);
 		testSolution.evaluate();
 		update(solution.getKeyValue(), solution);
+
+		String emailAddress = solution.getUser().getEmail();
+		String subject = "Online Judge System";
+		StringBuilder body = new StringBuilder();
+		body.append("Your solution of task: \"");
+		body.append(solution.getTask().getName());
+		body.append("\" was successful.\n");
+		body.append("The results after testing that solution are: ");
+		body.append(solution.getResult());
+		EmailSender.sendEmail(emailAddress, subject, body.toString());
+
 		unitOfWorkUtils.end();
 		return solution;
 	}

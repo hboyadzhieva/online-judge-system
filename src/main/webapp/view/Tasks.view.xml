@@ -66,8 +66,9 @@
 					<ColumnListItem>
 						<cells>
 							<ObjectIdentifier text="{Tasks>id}"/>
-							<Link text="{Tasks>name}" href="https://arena.maycamp.com/practice/get_problem_description?contest_id=48"/>
-							<Text text="{Tasks>statement}"/>
+
+							<Text text="{Tasks>name}"/>
+							<Link text="task" href="{Tasks>statement}"/>
 							<Link text="Submit" href="#/tasks/{Tasks>id}"/>
 						</cells>
 					</ColumnListItem>
