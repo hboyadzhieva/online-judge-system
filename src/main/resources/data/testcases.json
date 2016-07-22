@@ -1,54 +1,66 @@
 [
 	#bridge
 	{
+		id: 1, 
 		inputData: "5 1 4",
 		result: "1"
 	},
 	{
+		id: 2, 
 		inputData: "6 4 1 3 4 6",
 		result: "2"
 	},
 	#cars
 	{
+		id: 3, 
 		inputData: "9 4 3 9 0 6 2 1 7 5 8 0 9 8 1 6 4 3 7 5 2",
 		result: "6"
 	},
 	{
+		id: 4,
 		inputData: "6 3 4 0 5 1 2 6 4 5 3 0 1 6 2",
 		result: "6"
 	},
 	{
+		id: 5,
 		inputData: "4 1 0 4 3 2 1 0 4 3 2",
 		result: "0"
 	},
 	{
+		id: 6,
 		inputData: "5 0 1 2 3 4 5 5 4 3 2 1 0",
 		result: "7"
 	},
 	#digits
 	{
+		id: 7,
 		inputData: "18 10",
 		result: "3 6"
 	},
 	{
+		id: 8,
 		inputData: "16 10",
 		result: "0"
 	},
 	#sort ten integers
 	{
+		id: 9,
 		inputData: "5 8 1 3 2 4 6 9 7 0",
 		result: "0 1 2 3 4 5 6 7 8 9"
 	},
 	{
+		id: 10,
 		inputData: "50 40 80 30 70 60 10 20 100 90",
 		result: "10 20 30 40 50 60 70 80 90 100"
 	},
 	#sum two integers
 	{
+		id: 11,
 		inputData: "500 700",
 		result: "1200"
 	},
 	{
+		id: 12,
 		inputData: "300 200",
 		result: "500"
 	}
