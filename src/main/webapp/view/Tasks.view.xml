@@ -67,7 +67,7 @@
 						<cells>
 							<ObjectIdentifier text="{Tasks>id}"/>
 							<Text text="{Tasks>name}"/>
-							<Text text="{Tasks>statement}"/>
+							<Link text="task" href="{Tasks>statement}"/>
 							<Link text="Submit" href="#/tasks/{Tasks>id}"/>
 						</cells>
 					</ColumnListItem>

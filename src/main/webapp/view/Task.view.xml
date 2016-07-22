@@ -17,7 +17,7 @@
 				<Label text="Name"/>
 				<Text text="{/name}"/>
 				<Label text="Statement"/>
-				<Text text="{/statement}"/>
+				<Link text="task" href="{/statement}"/>
 				<Label text="Sample Input"/>
 				<Text text="{/sampleInput}"/>
 				<Label text="Sample Output"/>
