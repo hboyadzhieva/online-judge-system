@@ -2,6 +2,7 @@
 	{
 		text: "teeext",
 		language: "Java",
+		result: "CE",
 		task: {
 			id: 1
 		},
@@ -12,6 +13,29 @@
 	{
 		text: "teeext2",
 		language: "Java",
+		result: "OK, WA",
+		task: {
+			id: 1
+		},
+		user: {
+			id: "testuser"
+		}
+	},
+	{
+		text: "teeext2",
+		language: "Java",
+		result: "TL, OK",
+		task: {
+			id: 1
+		},
+		user: {
+			id: "testuser"
+		}
+	},
+	{
+		text: "teeext2",
+		language: "Java",
+		result: "OK, OK",
 		task: {
 			id: 1
 		},
