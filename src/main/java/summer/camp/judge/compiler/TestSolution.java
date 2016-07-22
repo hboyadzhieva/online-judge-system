@@ -65,6 +65,7 @@ public class TestSolution {
 
 				if ((timeLimit != null) && ((endTime - startTime) > timeLimit)) {
 					addToResult(result, TIME_LIMIT_EXPIRED_MESSAGE);
+					continue;
 				}
 				String testCaseOutput = testCase.getOutput();
 				if (testCaseOutput.equals(programOutput)) {
